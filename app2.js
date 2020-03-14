@@ -101,7 +101,7 @@ function encryption() {
         var a = document.createElement('a');
         a.href = 'data:' + data;
         a.download = 'key.json';
-        a.innerHTML = 'download JSON plz asap karde bhai';
+        a.innerHTML = '<button>Download key</button>';
 
         var container = document.getElementById('key');
         container.appendChild(a);
