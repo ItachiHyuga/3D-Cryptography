@@ -18,8 +18,11 @@
             <p> <strong> Password:</strong></p>
             <input type="text" id="password" name="password" placeholder="Longer the password the better..."><br>
             <p> Encryption cube size:</strong></p>
-            <input type="number" id="cubesize" name="cubesize" placeholder="Get recommended cube size from below..."
+            
+            <input type="number" id="cubesize" name="cubesize" class="box" placeholder="Get recommended cube size from below..."
                 min="1" max="150 "><br><br>
+                <button id="recommend" class="box" onclick="recommendCubesize()">Recommend cube size</button>
+                
         </div>
 
         <div id="buttons" class="buttons">
@@ -33,6 +36,7 @@
         <button id="plotgraph" style="display:none;">Plot Graph</button>
         <div id="key"></div>
         </div>
+        <br>
         <div id='myDiv'></div>
 
 

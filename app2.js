@@ -1,13 +1,12 @@
 var randomdigit = 0
-var side = 20
+
 //squares and cubes only upto 150.
 var squares = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024, 1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600, 1681, 1764, 1849, 1936, 2025, 2116, 2209, 2304, 2401, 2500, 2601, 2704, 2809, 2916, 3025, 3136, 3249, 3364, 3481, 3600, 3721, 3844, 3969, 4096, 4225, 4356, 4489, 4624, 4761, 4900, 5041, 5184, 5329, 5476, 5625, 5776, 5929, 6084, 6241, 6400, 6561, 6724, 6889, 7056, 7225, 7396, 7569, 7744, 7921, 8100, 8281, 8464, 8649, 8836, 9025, 9216, 9409, 9604, 9801, 1e4, 10201, 10404, 10609, 10816, 11025, 11236, 11449, 11664, 11881, 12100, 12321, 12544, 12769, 12996, 13225, 13456, 13689, 13924, 14161, 14400, 14641, 14884, 15129, 15376, 15625, 15876, 16129, 16384, 16641, 16900, 17161, 17424, 17689, 17956, 18225, 18496, 18769, 19044, 19321, 19600, 19881, 20164, 20449, 20736, 21025, 21316, 21609, 21904, 22201];
 var cubes = [0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1e3, 1331, 1728, 2197, 2744, 3375, 4096, 4913, 5832, 6859, 8e3, 9261, 10648, 12167, 13824, 15625, 17576, 19683, 21952, 24389, 27e3, 29791, 32768, 35937, 39304, 42875, 46656, 50653, 54872, 59319, 64e3, 68921, 74088, 79507, 85184, 91125, 97336, 103823, 110592, 117649, 125e3, 132651, 140608, 148877, 157464, 166375, 175616, 185193, 195112, 205379, 216e3, 226981, 238328, 250047, 262144, 274625, 287496, 300763, 314432, 328509, 343e3, 357911, 373248, 389017, 405224, 421875, 438976, 456533, 474552, 493039, 512e3, 531441, 551368, 571787, 592704, 614125, 636056, 658503, 681472, 704969, 729e3, 753571, 778688, 804357, 830584, 857375, 884736, 912673, 941192, 970299, 1e6, 1030301, 1061208, 1092727, 1124864, 1157625, 1191016, 1225043, 1259712, 1295029, 1331e3, 1367631, 1404928, 1442897, 1481544, 1520875, 1560896, 1601613, 1643032, 1685159, 1728e3, 1771561, 1815848, 1860867, 1906624, 1953125, 2000376, 2048383, 2097152, 2146689, 2197e3, 2248091, 2299968, 2352637, 2406104, 2460375, 2515456, 2571353, 2628072, 2685619, 2744e3, 2803221, 2863288, 2924207, 2985984, 3048625, 3112136, 3176523, 3241792, 3307949];
-var area = squares[side]
-var volume = cubes[side]
+
 var output = document.getElementById("output")
 
-console.log(side + " " + area + " " + volume)
+
 
 function encryption() {
 
@@ -15,6 +14,13 @@ function encryption() {
     if (document.getElementById("message").value !== "" & document.getElementById("password").value !== "" & document.getElementById("cubesize").value > 9 & document.getElementById("cubesize").value < 151) {
         //display confirmatory message
         output.innerHTML = "Status: <span style='color:green;'>OK</span>"
+
+        //accept inputs
+        var side = parseInt(document.getElementById("cubesize").value)
+        var area = side*side
+        var volume = area*side
+        console.log(side + " " + area + " " + volume)
+
 
         //AES encryption
         var ciphertext = CryptoJS.AES.encrypt(document.getElementById("message").value, document.getElementById("password").value).toString();
@@ -27,6 +33,16 @@ function encryption() {
         console.log(binaryciphertext)
         console.log(binary2Text(binaryciphertext))
         console.log(messagelength)
+
+        //checking message length against cube size
+        if(messagelength>=volume){
+            output.innerHTML = output.innerHTML + "<br><br>" + "Length: <span style='color:red;'>Error</span><br><br>Select a bigger cube size and press encrypt again. Get a recommended cube size by clicking 'Recommend'."
+            return
+        }
+        else{
+            output.innerHTML = output.innerHTML + "<br><br>" + "Length: <span style='color:green;'>OK</span>"
+
+        }
 
 
         //make an array
@@ -84,7 +100,7 @@ function encryption() {
         //Plot Graph
         document.getElementById("plotgraph").style.display = "inline-block"
         document.getElementById("plotgraph").onclick = function () {
-            plotGraph(cube)
+            plotGraph(cube,side)
         };
 
 
@@ -343,7 +359,7 @@ function shuffle(array) {
 
 
 //Plot Graph
-function plotGraph(cube) {
+function plotGraph(cube,side) {
     //PLOT on graph
 
     //create arrays for axes
@@ -446,4 +462,12 @@ function plotGraph(cube) {
 
     Plotly.newPlot('myDiv', data, layout);
 
+}
+
+
+//recommend cube size
+
+function recommendCubesize(){
+    //convert to aes and binary in one step calculate its length and all
+    document.getElementById("cubesize").value=Math.ceil(Math.cbrt(text2Binary(CryptoJS.AES.encrypt(document.getElementById("message").value, document.getElementById("password").value).toString()).length))+5 ;
 }
