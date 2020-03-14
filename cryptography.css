@@ -1,0 +1,27 @@
+.mainwindow {
+    background-color: rgba(0, 0, 0, 0.473);
+    width: 50%;
+    border: 3px solid #64ddfd;
+    
+    padding: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    color:aliceblue;
+    border-radius: 8px;
+    font-size: 20px;
+  }
+body{
+    animation: AnimationName 8s ease infinite;  
+    background: linear-gradient(289deg, #02002a,#0e2527);animation: AnimationName 7s ease infinite;background-size: 400% 400%;
+    color: #64ddfd;
+    font-family:courier;
+    text-align: center;
+}
+  
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
