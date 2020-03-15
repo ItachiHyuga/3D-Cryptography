@@ -17,8 +17,8 @@ function encryption() {
 
         //accept inputs
         var side = parseInt(document.getElementById("cubesize").value)
-        var area = side*side
-        var volume = area*side
+        var area = side * side
+        var volume = area * side
         console.log(side + " " + area + " " + volume)
 
 
@@ -35,11 +35,10 @@ function encryption() {
         console.log(messagelength)
 
         //checking message length against cube size
-        if(messagelength>=volume){
+        if (messagelength >= volume) {
             output.innerHTML = output.innerHTML + "<br><br>" + "Length: <span style='color:red;'>Error</span><br><br>Select a bigger cube size and press encrypt again. Get a recommended cube size by clicking 'Recommend'."
             return
-        }
-        else{
+        } else {
             output.innerHTML = output.innerHTML + "<br><br>" + "Length: <span style='color:green;'>OK</span>"
 
         }
@@ -100,7 +99,7 @@ function encryption() {
         //Plot Graph
         document.getElementById("plotgraph").style.display = "inline-block"
         document.getElementById("plotgraph").onclick = function () {
-            plotGraph(cube,side)
+            plotGraph(cube, side)
         };
 
 
@@ -359,7 +358,7 @@ function shuffle(array) {
 
 
 //Plot Graph
-function plotGraph(cube,side) {
+function plotGraph(cube, side) {
     //PLOT on graph
 
     //create arrays for axes
@@ -467,7 +466,23 @@ function plotGraph(cube,side) {
 
 //recommend cube size
 
-function recommendCubesize(){
+function recommendCubesize() {
     //convert to aes and binary in one step calculate its length and all
-    document.getElementById("cubesize").value=Math.ceil(Math.cbrt(text2Binary(CryptoJS.AES.encrypt(document.getElementById("message").value, document.getElementById("password").value).toString()).length))+5 ;
+    document.getElementById("cubesize").value = Math.ceil(Math.cbrt(text2Binary(CryptoJS.AES.encrypt(document.getElementById("message").value, document.getElementById("password").value).toString()).length)) + 5;
+}
+
+//dec to binary only for numbers till 255
+//output in binary..string format
+function dec2bin(dec) {
+    var zero = "0"
+
+    var num = (dec >>> 0).toString(2);
+    var numlength = num.length
+    if (num.length != 8) {
+        for (let i = 0; i < (8 - numlength); i++) {
+            num = zero + num;
+        }
+    }
+    return num
+
 }
