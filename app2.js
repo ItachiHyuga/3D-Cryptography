@@ -12,6 +12,10 @@ function encryption() {
 
     //test inputs
     if (document.getElementById("message").value !== "" & document.getElementById("password").value !== "" & document.getElementById("cubesize").value > 9 & document.getElementById("cubesize").value < 151) {
+        //make old graph div invisible. essentially clear old graph command
+        document.getElementById("myDiv").style.display = "none"
+
+        
         //display confirmatory message
         output.innerHTML = "Status: <span style='color:green;'>OK</span>"
 
@@ -113,13 +117,13 @@ function encryption() {
 
 
         //download key
-        var a = document.createElement('a');
+        document.getElementById("keyid").style.display = "block"
+        var a = document.getElementById('key');
         a.href = 'data:' + data;
         a.download = 'key.json';
-        a.innerHTML = '<button>Download key</button>';
+      
 
-        var container = document.getElementById('key');
-        container.appendChild(a);
+      
 
 
     } else {
@@ -359,6 +363,10 @@ function shuffle(array) {
 
 //Plot Graph
 function plotGraph(cube, side) {
+
+    //make graph div visible
+    document.getElementById("myDiv").style.display = "inline-block"
+
     //PLOT on graph
 
     //create arrays for axes
