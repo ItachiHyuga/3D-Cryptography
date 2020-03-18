@@ -15,7 +15,7 @@
 
 body {
     animation: AnimationName 8s ease infinite;
-    background: linear-gradient(289deg, #02002a, #0e2527);
+    background: linear-gradient(289deg, #030029, #002529);
     animation: AnimationName 7s ease infinite;
     background-size: 400% 400%;
     color: #64ddfd;
@@ -79,3 +79,16 @@ button:active {
     border-radius: 8px;
 }
 
+
+/*test*/
+
+#myProgress {
+    width: 100%;
+    background-color: #ddd;
+  }
+  
+  #myBar {
+    width: 1%;
+    height: 30px;
+    background-color: #4CAF50;
+  }

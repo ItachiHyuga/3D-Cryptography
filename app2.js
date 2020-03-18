@@ -15,7 +15,6 @@ function encryption() {
         //make old graph div invisible. essentially clear old graph command
         document.getElementById("myDiv").style.display = "none"
 
-        
         //display confirmatory message
         output.innerHTML = "Status: <span style='color:green;'>OK</span>"
 
@@ -71,8 +70,11 @@ function encryption() {
             cube[i] = new Array();
             for (let j = 0; j < side; j++) {
                 cube[i][j] = new Array();
+
             }
         }
+
+
         output.innerHTML = output.innerHTML + "<br><br>" + "Creation of cube: <span style='color:green;'>Success</span>"
         //put data in cube
         var addresscounter = 0
@@ -121,14 +123,28 @@ function encryption() {
         var a = document.getElementById('key');
         a.href = 'data:' + data;
         a.download = 'key.json';
-      
 
-      
+
+
 
 
     } else {
         //display error message
-        output.innerHTML = "error"
+
+        output.innerHTML = "Error 748"
+
+        if (document.getElementById("message").value == "") {
+            output.innerHTML = output.innerHTML + "<br><br>" + "<span style='color:red;'>Message field is empty!</span>"
+        }
+        if (document.getElementById("password").value == "") {
+            output.innerHTML = output.innerHTML + "<br>" + "<span style='color:red;'>Password field is empty!</span>"
+        }
+        if (document.getElementById("cubesize").value < 9) {
+            output.innerHTML = output.innerHTML + "<br>" + "<span style='color:red;'>Cube Size too short!</span>"
+        }
+        if (document.getElementById("cubesize").value > 150) {
+            output.innerHTML = output.innerHTML + "<br>" + "<span style='color:red;'>Cube size of that magnitude will take a lot of processing power and is not recommended for your current system!</span>"
+        }
     }
 
 
