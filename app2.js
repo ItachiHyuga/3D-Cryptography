@@ -5,11 +5,11 @@ var squares = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225,
 var cubes = [0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1e3, 1331, 1728, 2197, 2744, 3375, 4096, 4913, 5832, 6859, 8e3, 9261, 10648, 12167, 13824, 15625, 17576, 19683, 21952, 24389, 27e3, 29791, 32768, 35937, 39304, 42875, 46656, 50653, 54872, 59319, 64e3, 68921, 74088, 79507, 85184, 91125, 97336, 103823, 110592, 117649, 125e3, 132651, 140608, 148877, 157464, 166375, 175616, 185193, 195112, 205379, 216e3, 226981, 238328, 250047, 262144, 274625, 287496, 300763, 314432, 328509, 343e3, 357911, 373248, 389017, 405224, 421875, 438976, 456533, 474552, 493039, 512e3, 531441, 551368, 571787, 592704, 614125, 636056, 658503, 681472, 704969, 729e3, 753571, 778688, 804357, 830584, 857375, 884736, 912673, 941192, 970299, 1e6, 1030301, 1061208, 1092727, 1124864, 1157625, 1191016, 1225043, 1259712, 1295029, 1331e3, 1367631, 1404928, 1442897, 1481544, 1520875, 1560896, 1601613, 1643032, 1685159, 1728e3, 1771561, 1815848, 1860867, 1906624, 1953125, 2000376, 2048383, 2097152, 2146689, 2197e3, 2248091, 2299968, 2352637, 2406104, 2460375, 2515456, 2571353, 2628072, 2685619, 2744e3, 2803221, 2863288, 2924207, 2985984, 3048625, 3112136, 3176523, 3241792, 3307949];
 
 var output = document.getElementById("output")
-
+var click=0
 
 
 function encryption() {
-
+    click++
     //test inputs
     if (document.getElementById("message").value !== "" & document.getElementById("password").value !== "" & document.getElementById("cubesize").value > 9 & document.getElementById("cubesize").value < 151) {
         //make old graph div invisible. essentially clear old graph command
@@ -37,6 +37,7 @@ function encryption() {
         console.log(binary2Text(binaryciphertext))
         console.log(messagelength)
 
+
         //checking message length against cube size
         if (messagelength >= volume) {
             output.innerHTML = output.innerHTML + "<br><br>" + "Length: <span style='color:red;'>Error</span><br><br>Select a bigger cube size and press encrypt again. Get a recommended cube size by clicking 'Recommend'."
@@ -46,7 +47,7 @@ function encryption() {
 
         }
 
-
+        console.time()
         //make an array
         var numbers = new Array();
         for (let i = 0; i < volume; i++) {
@@ -98,10 +99,12 @@ function encryption() {
                 }
             }
         }
+        console.timeEnd();
+        console.log("Click counter: "+click)
         console.log(cube)
         output.innerHTML = output.innerHTML + "<br><br>" + "Encrypted cube: <span style='color:green;'>Ready</span>"
 
-
+        
         //Plot Graph
         document.getElementById("plotgraph").style.display = "inline-block"
         document.getElementById("plotgraph").onclick = function () {
