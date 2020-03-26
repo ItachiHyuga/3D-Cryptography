@@ -2,20 +2,23 @@ var click2 = 0;
 
 function speedtest() {
     click2++
+    var area = squares[side]
+    console.time()
+    
     var binaryciphertext = text2Binary(document.getElementById("message").value);
     var side = parseInt(document.getElementById("cubesize").value)
-    var area = side * side
-    var volume = area * side
-    console.log(side + " " + area + " " + volume)
+    
+    var volume = cubes[side]
+    //console.log(side + " " + area + " " + volume)
     var messagelength = binaryciphertext.length
 
-    console.time()
+   
     //make an array
-    var numbers = new Array();
+    var numbers = new Array(); 
     for (let i = 0; i < volume; i++) {
         numbers[i] = i;
     }
-    console.log("This is the numbers array " + numbers)
+    //console.log("This is the numbers array " + numbers)
     //output.innerHTML = output.innerHTML + "<br><br>" + "Part 1/2_Array creation: <span style='color:green;'>Success</span>"
 
 
@@ -41,7 +44,7 @@ function speedtest() {
     //output.innerHTML = output.innerHTML + "<br><br>" + "Creation of cube: <span style='color:green;'>Success</span>"
     //put data in cube
     var addresscounter = 0
-    let tempcounter = 0
+    //let tempcounter = 0
     for (let k = 0; k < side; k++) {
         for (let i = 0; i < side; i++) {
             for (let j = 0; j < side; j++) {
@@ -50,7 +53,7 @@ function speedtest() {
                     //input actual data based on the key
                     cube[i][j][k] = parseInt(binaryciphertext[key.indexOf(addresscounter)])
                     //this variable is just for testing purposes
-                    tempcounter++
+                    //tempcounter++
                 } else {
                     //input random data
                     cube[i][j][k] = Math.floor((Math.random() * 2))
@@ -64,6 +67,40 @@ function speedtest() {
     console.timeEnd();
     console.log("Click counter: " + click2)
     console.log(cube)
+
+    /*decryption code
+    This code will decrypt from the key. 
+    later to be exported to another function
+    
+    */
+
+    //figure out a way to decide size of cube
+
+    //make an address mapper
+    console.time()
+    var addressmap = new Array();
+    var addressmapindex = 0
+    for (let k = 0; k < side; k++) {
+        for (let i = 0; i < side; i++) {
+            for (let j = 0; j < side; j++) {
+                addressmap[addressmapindex] = [i, j, k]
+                addressmapindex++;
+
+            }
+        }
+    }
+    //console.log(addressmap)
+
+    //extract data from cube
+    var decryptedarray = new Array();
+    for (let i = 0; i < key.length; i++) {
+        //may be an error here
+        decryptedarray[i] = cube[addressmap[key[i]][0]][addressmap[key[i]][1]][addressmap[key[i]][2]]
+    }
+
+    var decryptedtext = binary2Text(decryptedarray.toString().replace(/,/g, ""))
+    console.timeEnd()
+    console.log("decrypted text: " + decryptedtext)
 
 
 }
