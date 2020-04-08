@@ -5,7 +5,7 @@ var squares = [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225,
 var cubes = [0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1e3, 1331, 1728, 2197, 2744, 3375, 4096, 4913, 5832, 6859, 8e3, 9261, 10648, 12167, 13824, 15625, 17576, 19683, 21952, 24389, 27e3, 29791, 32768, 35937, 39304, 42875, 46656, 50653, 54872, 59319, 64e3, 68921, 74088, 79507, 85184, 91125, 97336, 103823, 110592, 117649, 125e3, 132651, 140608, 148877, 157464, 166375, 175616, 185193, 195112, 205379, 216e3, 226981, 238328, 250047, 262144, 274625, 287496, 300763, 314432, 328509, 343e3, 357911, 373248, 389017, 405224, 421875, 438976, 456533, 474552, 493039, 512e3, 531441, 551368, 571787, 592704, 614125, 636056, 658503, 681472, 704969, 729e3, 753571, 778688, 804357, 830584, 857375, 884736, 912673, 941192, 970299, 1e6, 1030301, 1061208, 1092727, 1124864, 1157625, 1191016, 1225043, 1259712, 1295029, 1331e3, 1367631, 1404928, 1442897, 1481544, 1520875, 1560896, 1601613, 1643032, 1685159, 1728e3, 1771561, 1815848, 1860867, 1906624, 1953125, 2000376, 2048383, 2097152, 2146689, 2197e3, 2248091, 2299968, 2352637, 2406104, 2460375, 2515456, 2571353, 2628072, 2685619, 2744e3, 2803221, 2863288, 2924207, 2985984, 3048625, 3112136, 3176523, 3241792, 3307949];
 
 var output = document.getElementById("output")
-var click=0
+var click = 0
 
 
 function encryption() {
@@ -100,11 +100,11 @@ function encryption() {
             }
         }
         console.timeEnd();
-        console.log("Click counter: "+click)
+        console.log("Click counter: " + click)
         console.log(cube)
         output.innerHTML = output.innerHTML + "<br><br>" + "Encrypted cube: <span style='color:green;'>Ready</span>"
 
-        
+
         //Plot Graph
         document.getElementById("plotgraph").style.display = "inline-block"
         document.getElementById("plotgraph").onclick = function () {
@@ -126,6 +126,32 @@ function encryption() {
         var a = document.getElementById('key');
         a.href = 'data:' + data;
         a.download = 'key.json';
+
+
+
+        //make an image
+        document.getElementById("inputimage").style.display = "block"
+        document.getElementById("inputimagehere").onchange = function () {
+            //accept image
+            const preview = document.getElementById('scream');
+            const file = document.querySelector('input[type=file]').files[0];
+            const reader = new FileReader();
+            console.log(file);
+            reader.addEventListener("load", function () {
+                // convert image file to base64 string
+
+                preview.src = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+
+        };
+        document.getElementById("scream").onload = function () {
+            steganography(cube, side)
+        };
+
 
 
 
@@ -274,6 +300,14 @@ function submitform() {
 
 
     //make an image
+    document.getElementById("inputimage").style.display = "block"
+    document.getElementById("inputimagehere").onchange = function () {
+        steganography(cube)
+    };
+
+
+
+
 
 
 
@@ -515,7 +549,91 @@ function dec2bin(dec) {
 }
 
 //binary to decimal
-function bin2dec(bstr) { 
+function bin2dec(bstr) {
     return parseInt((bstr + '')
-    .replace(/[^01]/gi, ''), 2);
+        .replace(/[^01]/gi, ''), 2);
 }
+
+
+//steganography
+function steganography(cube, side) {
+
+
+
+
+
+
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    var img = document.getElementById("scream");
+    c.height = img.height
+    c.width = img.width
+    console.log(c.height + " " + c.width)
+    ctx.drawImage(img, 0, 0);
+    var imgData = ctx.getImageData(0, 0, c.width, c.height);
+    console.log(imgData.data.length/4)
+
+
+
+
+
+    //steganography starts here
+
+    //make an address mapper
+    var addressmap = new Array();
+    var addressmapindex = 0
+    for (let k = 0; k < side; k++) {
+        for (let i = 0; i < side; i++) {
+            for (let j = 0; j < side; j++) {
+                addressmap[addressmapindex] = [i, j, k]
+                addressmapindex++;
+
+            }
+        }
+    }
+    console.log(addressmap)
+    console.log(addressmapindex + " " + (side * side * side))
+
+    //checking if image is large enough
+    if (addressmapindex > (imgData.data.length/4)) {
+        console.log("image too small")
+    }
+
+    //inputting valid pixels
+    var bluepixel;
+    var cubedata;
+    var i;
+    var k=0;
+    for (i = 0; i < imgData.data.length; i += 4) {
+
+        //RED
+        imgData.data[i] = imgData.data[i];
+        //GREEN
+        imgData.data[i + 1] = imgData.data[i + 1];
+        //BLUE
+        //take blue pixel and convert to binary
+        bluepixel=dec2bin(imgData.data[i + 2])
+        
+        //the bluepixel variable now contains a string of the binary of length 8.
+        //Store our data into the last plane
+        cubedata=cube[addressmap[k][0]][addressmap[k][1]][addressmap[k][2]].toString()
+        bluepixel=bluepixel.slice(0,7)
+        bluepixel=bluepixel.concat(cubedata)
+
+        //Give the modified bluepixel back after converting it to decimal
+        //bin2dec automatically converts string to number
+        imgData.data[i + 2] = bin2dec(bluepixel);
+        //A
+        imgData.data[i + 3] = 255;
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+
+
+
+
+
+
+}
+
+

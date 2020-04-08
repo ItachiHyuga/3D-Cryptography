@@ -16,38 +16,48 @@
             <p> <strong> Secret message:</strong></p>
             <textarea id="message" name="message" placeholder="Type in the message you want to encrypt..."></textarea>
             <p> <strong> Password:</strong></p>
-            <input  id="password" name="password" placeholder="Longer the password the better..."><br>
+            <input id="password" name="password" placeholder="Longer the password the better..."><br>
             <p> Encryption cube size:</strong></p>
-            
-            
-            <input type="number" id="cubesize" name="cubesize" class="box" placeholder="Get recommended cube size from below..."
-                min="1" max="150 "><br><br>
-            
-                <button id="recommend" class="box" onclick="recommendCubesize()">Recommend cube size</button>
-                
+
+
+            <input type="number" id="cubesize" name="cubesize" class="box"
+                placeholder="Get recommended cube size from below..." min="1" max="150 "><br><br>
+
+            <button id="recommend" class="box" onclick="recommendCubesize()">Recommend cube size</button>
+
         </div>
 
         <div id="buttons" class="buttons">
             <button id="encryption" class="encryption" onclick="encryption()"> ENCRYPT </button>
         </div>
-        
+
         <div>
             <p id="output" class="output"></p>
         </div>
         <div>
-        <button id="plotgraph" style="display:none;">Plot Graph</button>
-        <div id="keyid" style="display:none;"><a id="key"><button>Download key</button></a></div>
+            <button id="plotgraph" style="display:none;">Plot Graph</button>
+            <div id="keyid" style="display:none;"><a id="key"><button>Download key</button></a></div>
+            <div id="inputimage" style="display:none;">
+                <input type="file" id="inputimagehere"><br>
+                <img src="" alt="Image preview..." id="scream">
+                <canvas id="myCanvas"  style="border:1px solid #d3d3d3;">
+                    Your browser does not support the HTML5 canvas tag.</canvas>
+            </div>
+            <img src="" alt="Image preview..." id="scream">
         </div>
         <br>
         <div id='myDiv' style="display:none;"></div>
+
+
+        <!-- Speed test-->
         <a href="speedtest.html"><button>Performance Test</button></a>
-  
+
 
     </div>
 
-    <!-- Speed test-->
 
-   
+
+
 
     <!--
        Secret message: <input type="text" id="message" name="message"><br><br>
@@ -64,7 +74,7 @@
       <canvas id="canvas" width=120 height=120></canvas>>-->
     <script type="text/javascript" src="crypto-js.js"></script>
     <script type="text/javascript" src="app2.js"></script>
-    <script type="text/javascript" src="speedtest.js"></script>
+
 </body>
 
 </html>
