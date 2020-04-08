@@ -513,3 +513,9 @@ function dec2bin(dec) {
     return num
 
 }
+
+//binary to decimal
+function bin2dec(bstr) { 
+    return parseInt((bstr + '')
+    .replace(/[^01]/gi, ''), 2);
+}

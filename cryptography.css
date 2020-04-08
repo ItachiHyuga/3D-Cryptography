@@ -79,3 +79,10 @@ button:active {
     border-radius: 8px;
 }
 
+#fixedbutton {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    margin-left: 0;
+    margin-right: auto;
+}
