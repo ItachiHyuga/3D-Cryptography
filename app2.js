@@ -616,9 +616,9 @@ function steganography(cube, side) {
         
         //the bluepixel variable now contains a string of the binary of length 8.
         //Store our data into the last plane
-        cubedata=cube[addressmap[k][0]][addressmap[k][1]][addressmap[k][2]].toString()
-        bluepixel=bluepixel.slice(0,7)
-        bluepixel=bluepixel.concat(cubedata)
+  
+    
+        bluepixel=bluepixel.slice(0,7).concat(cubecube[addressmap[k][0]][addressmap[k][1]][addressmap[k][2]].toString()data)
 
         //Give the modified bluepixel back after converting it to decimal
         //bin2dec automatically converts string to number
