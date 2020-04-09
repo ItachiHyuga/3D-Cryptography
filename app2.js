@@ -158,6 +158,8 @@ function encryption() {
 
 
 
+
+
     } else {
         //display error message
 
@@ -472,6 +474,12 @@ function steganography(cube, side) {
     ctx.putImageData(imgData, 0, 0);
     console.log(pixeldata)
     console.log(pixeldata2)
+   
+        var link = document.createElement('a');
+        link.download = 'filename.png';
+        link.href = document.getElementById('myCanvas').toDataURL()
+        link.click();
+      
 
 
 
@@ -481,5 +489,6 @@ function steganography(cube, side) {
 
 
 }
+
 
 
