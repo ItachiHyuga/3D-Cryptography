@@ -94,6 +94,8 @@ document.getElementById("scream").onload = function () {
     var bytes = CryptoJS.AES.decrypt(decryptedtext, json.aeskey);
     var originalText = bytes.toString(CryptoJS.enc.Utf8);
     console.log("decrypted text: " + originalText)
+    
+    document.getElementById("output").innerHTML ="<p>Decrypted text: "+originalText+"</p>"
 
   
 };
