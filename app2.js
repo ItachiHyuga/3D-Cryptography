@@ -433,7 +433,7 @@ function steganography(cube, side) {
     if (addressmapindex > (imgData.data.length/4)) {
 
         console.log("image too small")
-        document.getElementById("imgsmall").innerHTML="<p><span style='color:red;'>Image too small</span></p>"
+        alert("Image too small!")
     }
 
     //inputting valid pixels
